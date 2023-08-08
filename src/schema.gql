@@ -1,0 +1,223 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Author {
+  avatar: String!
+  createdAt: DateTime!
+  folders: [Folder!]!
+  name: String!
+  uid: String!
+  updatedAt: DateTime!
+}
+
+type AuthorResponse implements IResponse {
+  author: Author
+  message: String!
+  statusCode: Float!
+}
+
+input CreateAuthorInput {
+  avatar: String!
+  name: String!
+  uid: String!
+}
+
+input CreateFolderInput {
+  name: String!
+}
+
+input CreateNoteInput {
+  content: String
+  folderId: String!
+  title: String!
+}
+
+input CreateNotificationInput {
+  content: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Folder {
+  author: [Author!]!
+  authorId: String!
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  notes: [Note!]!
+  updatedAt: DateTime!
+}
+
+input FolderQueryParamsInput {
+  limit: Float
+  p: Float
+  sortBy: String
+  sortType: String
+}
+
+type FolderResponse implements IResponse {
+  folder: Folder!
+  message: String!
+  statusCode: Float!
+}
+
+type FoldersResponse implements IResponse {
+  count: Float!
+  folders: [Folder!]!
+  message: String!
+  statusCode: Float!
+  totalPages: Float!
+}
+
+interface IResponse {
+  message: String!
+  statusCode: Float!
+}
+
+input LoginInput {
+  avatar: String!
+  name: String!
+  uid: String!
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
+  createFolder(createFolderInput: CreateFolderInput!): FolderResponse!
+  createNote(createNoteInput: CreateNoteInput!): NoteResponse!
+  createNotification(createNotificationInput: CreateNotificationInput!): NotificationResponse!
+  login(loginInput: LoginInput!): AuthorResponse!
+  removeAuthor(id: Int!): Author!
+  removeFolders(idList: [String!]!): RemoveFolderResponse!
+  removeNotes(idList: [String!]!): RemoveNoteResponse!
+  seenNotification(idList: [String!]!): UpdateNotificationResponse!
+  updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
+  updateFolder(updateFolderInput: UpdateFolderInput!): UpdateFolderResponse!
+  updateNote(updateNoteInput: UpdateNoteInput!): UpdateNoteResponse!
+}
+
+type Note {
+  content: String!
+  createdAt: String!
+  folder: Folder!
+  folderId: String!
+  id: String!
+  title: String!
+  updatedAt: String!
+}
+
+input NoteQueryParamsInput {
+  folderId: String!
+  limit: Float
+  p: Float
+  sortBy: String
+  sortType: String
+}
+
+type NoteResponse implements IResponse {
+  message: String!
+  note: Note!
+  statusCode: Float!
+}
+
+type NotesResponse implements IResponse {
+  count: Float!
+  message: String!
+  notes: [Note!]!
+  statusCode: Float!
+  totalPages: Float!
+}
+
+type Notification {
+  content: String!
+  createdAt: String!
+  id: String!
+  seenIds: [String!]!
+  updatedAt: String!
+}
+
+input NotificationQueryParamsInput {
+  limit: Float
+  p: Float
+  sortBy: String
+  sortType: String
+}
+
+type NotificationResponse implements IResponse {
+  message: String!
+  notification: Notification!
+  statusCode: Float!
+}
+
+type NotificationsResponse implements IResponse {
+  count: Float!
+  message: String!
+  notifications: [Notification!]!
+  statusCode: Float!
+  totalPages: Float!
+}
+
+type Query {
+  author(id: Int!): Author!
+  authorNotifications(authorNotificationQueryParamsInput: NotificationQueryParamsInput!): NotificationsResponse!
+  folder(id: Int!): Folder!
+  folders(folderQueryParamsInput: FolderQueryParamsInput!): FoldersResponse!
+  note(id: String!): NoteResponse!
+  notes(noteQueryParamsInput: NoteQueryParamsInput!): NotesResponse!
+  notifications(notificationQueryParamsInput: NotificationQueryParamsInput!): NotificationsResponse!
+}
+
+type RemoveFolderResponse implements IResponse {
+  isDeleted: Boolean!
+  message: String!
+  statusCode: Float!
+}
+
+type RemoveNoteResponse implements IResponse {
+  isDeleted: Boolean!
+  message: String!
+  statusCode: Float!
+}
+
+type Subscription {
+  notificationAdded: Notification!
+}
+
+input UpdateAuthorInput {
+  avatar: String
+  name: String
+  uid: String
+}
+
+input UpdateFolderInput {
+  id: String!
+  name: String
+}
+
+type UpdateFolderResponse implements IResponse {
+  isUpdated: Boolean!
+  message: String!
+  statusCode: Float!
+}
+
+input UpdateNoteInput {
+  content: String
+  folderId: String
+  id: String!
+  title: String
+}
+
+type UpdateNoteResponse implements IResponse {
+  isUpdated: Boolean!
+  message: String!
+  statusCode: Float!
+}
+
+type UpdateNotificationResponse implements IResponse {
+  isUpdated: Boolean!
+  message: String!
+  statusCode: Float!
+}
